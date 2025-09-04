@@ -1,14 +1,14 @@
 {
   "name": "fruitbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bot to ping roles for fruit stock",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Abu Thaeer",
   "license": "ISC",
   "engines": {
     "node": "22.x"

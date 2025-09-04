@@ -1,4 +1,4 @@
-// Tiny Express server to keep Railway awake
+// Express server to keep Railway awake
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -6,16 +6,18 @@ const PORT = process.env.PORT || 3000;
 app.get('/', (req, res) => res.send('Bot is running!'));
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Load environment variables
+// Discord bot setup
 require('dotenv').config();
 const { Client, GatewayIntentBits } = require('discord.js');
-
-// Create Discord client
-const client = new Client({ 
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] 
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent
+    ]
 });
 
-// Mapping fruit names to role IDs
+// Fruit roles mapping
 const fruitRoles = {
     kitsune: '1412448878703415368',
     dragon: '1412448924014346383',
@@ -28,7 +30,7 @@ const fruitRoles = {
     pain: '1412449744109830206',
     dough: '1412448791805694074',
     flame: '1412831515670216797',
-    smoke:'1412828805810094233',
+    smoke: '1412828805810094233',
     spin: '1412848495295201412',
     spike: '1412848590921007235',
     spring: '1412849346273083423',
@@ -39,12 +41,12 @@ const fruitRoles = {
 // Vulcan bot ID
 const VULCAN_BOT_ID = '1401949512091828348';
 
-// When bot is ready
+// Bot ready
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
-// Listen for messages from Vulcan bot
+// Listen for messages from Vulcan
 client.on('messageCreate', async (message) => {
     if (message.author.id !== VULCAN_BOT_ID) return;
 
@@ -61,10 +63,9 @@ client.on('messageCreate', async (message) => {
     });
 });
 
-// Check if text contains fruit names and ping roles
+// Ping roles if fruit found
 function checkFruit(text, message) {
     const lowerText = text.toLowerCase();
-
     for (const fruit in fruitRoles) {
         if (lowerText.includes(fruit.toLowerCase())) {
             const roleId = fruitRoles[fruit];
@@ -73,5 +74,5 @@ function checkFruit(text, message) {
     }
 }
 
-// Login using token from environment variable
+// Login using environment token
 client.login(process.env.TOKEN);
